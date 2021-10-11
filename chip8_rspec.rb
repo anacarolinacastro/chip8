@@ -38,10 +38,28 @@ RSpec.describe Chip8 do
         chip8.execute(test_case[:opcode], test_case[:operand])
 
         expect(chip8.v[test_case[:index]]).to eq(test_case[:operand])
+        expect(chip8.pc).to eq(2)
       end
     end
 
     it "sets Vx to Vx + kk when opcode is 7xkk" do
+      tests = [
+        { index: 2, opcode: 0x72, operand: 0x2A, expected: 0x2B },
+        { index: 1, opcode: 0x71, operand: 0xFA, expected: 0xFB },
+      ]
+
+      tests.each do |test_case|
+        chip8 = Chip8.new
+        chip8.v[test_case[:index]] = 0x1
+
+        chip8.execute(test_case[:opcode], test_case[:operand])
+
+        expect(chip8.v[test_case[:index]]).to eq(test_case[:expected])
+        expect(chip8.pc).to eq(2)
+      end
+    end
+
+    it "sets I to nn + kk when opcode is Annn" do
       tests = [
         { opcode: 0xA2, operand: 0x2A, expected: 0x22A },
         { opcode: 0xA1, operand: 0xFA, expected: 0x1FA },
@@ -53,6 +71,7 @@ RSpec.describe Chip8 do
         chip8.execute(test_case[:opcode], test_case[:operand])
 
         expect(chip8.i).to eq(test_case[:expected])
+        expect(chip8.pc).to eq(2)
       end
     end
   end
