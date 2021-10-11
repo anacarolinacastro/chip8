@@ -22,28 +22,22 @@ class Chip8
   end
 
   def execute(opcode, operand)
-    if opcode == 0x0 && operand == 0xE0
-      # 00E0 - CLS: Clear the display.
+    if opcode == 0x0 && operand == 0xE0 # 00E0
       clear
       increment_pc
-    elsif opcode >> 0x4 == 0x1
-      # 1nnn - Jump to location nnn.
+    elsif opcode >> 0x4 == 0x1 # 1nnn
       @pc = ((opcode & 0xF) << 0x8) + operand
-    elsif opcode >> 0x4 == 0x6
-      # 6xkk - The interpreter puts the value kk into register Vx.
+    elsif opcode >> 0x4 == 0x6 # 6xkk
       @v[opcode & 0xF] = operand
       increment_pc
-    elsif opcode >> 0x4 == 0x7
-      # 7xkk - Set Vx = Vx + kk
+    elsif opcode >> 0x4 == 0x7 # 7xkk
       @v[opcode & 0xF] = @v[opcode & 0xF] + operand
       increment_pc
-    elsif opcode >> 0x4 == 0xA
-      # Annn - The value of register I is set to nnn.
+    elsif opcode >> 0x4 == 0xA # Annn
       @i = ((opcode & 0xF) << 0x8) + operand
       increment_pc
-    elsif opcode >> 0x4 == 0xD
+    elsif opcode >> 0x4 == 0xD # Dxyn
       puts "TODO - hardcore"
-      # Dxyn - Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
       increment_pc
     else
       debug(opcode, operand)
