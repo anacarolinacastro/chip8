@@ -44,7 +44,6 @@ class Chip8
       # Dxyn - Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
       increment_pc
     else
-      byebug
       puts "#{hex(opcode)} #{hex(operand)}"
       debug(opcode, operand)
       increment_pc
