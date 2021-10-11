@@ -1,5 +1,6 @@
 build:
 	docker build -t chip8 .
+	
 run:
 	docker run -it --rm  -v $(shell pwd):/files --workdir=/files chip8 ruby main.rb
 

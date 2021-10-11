@@ -4,6 +4,7 @@ RSpec.describe Chip8 do
   describe "#execute" do
     it "clears when opcode is 00E0" do
       chip8 = Chip8.new
+
       chip8.execute(0x0, 0xE0)
 
       expect(chip8.pc).to eq(2)
@@ -44,7 +45,9 @@ RSpec.describe Chip8 do
 
       tests.each do |test_case|
         chip8 = Chip8.new
+
         chip8.execute(test_case[:opcode], test_case[:operand])
+
         expect(chip8.i).to eq(test_case[:expected])
       end
     end
