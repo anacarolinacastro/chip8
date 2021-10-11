@@ -26,6 +26,9 @@ class Chip8
       # 00E0 - CLS: Clear the display.
       clear
       increment_pc
+    elsif opcode >> 0x4 == 0x1
+      # 1nnn - Jump to location nnn.
+      @pc = ((opcode & 0xF) << 0x8) + operand
     elsif opcode >> 0x4 == 0x6
       # 6xkk - The interpreter puts the value kk into register Vx.
       @v[opcode & 0xF] = operand
@@ -36,7 +39,7 @@ class Chip8
       increment_pc
     elsif opcode >> 0x4 == 0xA
       # Annn - The value of register I is set to nnn.
-      @i = (((opcode & 0xF) << 0x8) + operand)
+      @i = ((opcode & 0xF) << 0x8) + operand
       increment_pc
     elsif opcode >> 0x4 == 0xD
       puts "TODO - hardcore"
