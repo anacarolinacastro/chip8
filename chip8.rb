@@ -43,11 +43,9 @@ class Chip8
       increment_pc
     elsif opcode >> 0x4 == 0xD
       puts "TODO - hardcore"
-      ### TODO
       # Dxyn - Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
       increment_pc
     else
-      puts "#{hex(opcode)} #{hex(operand)}"
       debug(opcode, operand)
       increment_pc
     end
